@@ -23,6 +23,7 @@ class WebViewController: UIViewController {
     lazy var backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward.circle"), style: .plain, target: self, action: #selector(goBack))
     lazy var forwardButton =  UIBarButtonItem(image: UIImage(systemName: "chevron.forward.circle"), style: .plain, target: self, action: #selector(goForward))
     lazy var reloadButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reload))
+    lazy var closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(close))
 
     /// activity Indicator
     var activityIndicator: UIActivityIndicatorView!
@@ -83,12 +84,12 @@ class WebViewController: UIViewController {
     }
 
     private func buttonsConfiguration() {
-        [backButton, forwardButton, reloadButton].forEach {
+        [backButton, forwardButton, reloadButton, closeButton].forEach {
             $0.tintColor = .white
         }
 
         backButton.isEnabled = false
-        navigationItem.rightBarButtonItems = [reloadButton]
+        navigationItem.rightBarButtonItems = [closeButton, reloadButton]
         navigationItem.leftBarButtonItems = [backButton, forwardButton]
     }
 
@@ -119,6 +120,10 @@ class WebViewController: UIViewController {
     @objc func reload() {
         webView.reload()
         showActivityIndicator(show: false)
+    }
+
+    @objc func close() {
+        self.dismiss(animated: true)
     }
 
     /// Observe changes to if can Go Back and  if  can Go Forward properties 👻
